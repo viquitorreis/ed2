@@ -6,12 +6,25 @@ func main() {
 	bst := NewBSTree()
 	bst.Insert(4).Insert(2).Insert(1).Insert(10)
 	bst.PrintInorder(bst.GetRoot())
+
+	node := bst.GetNode(1)
+
+	// fmt.Printf("node data: %d. Left: %d, Right: %d \n", node.data, node.left.data, node.right.data)
+
+	depth := bst.Depth(node)
+
+	println("node depth: ", depth)
+
+	println("quantidade de folhas:", bst.CountLeaves())
 }
 
 type BSTree interface {
+	GetRoot() *Node
+	GetNode(d int) *Node
 	Insert(d int) *bst
 	PrintInorder(n *Node)
-	GetRoot() *Node
+	Depth(n *Node) int
+	CountLeaves() int
 }
 
 type bst struct {
@@ -33,7 +46,6 @@ func (t *bst) GetRoot() *Node {
 }
 
 func (t *bst) Insert(d int) *bst {
-	println("inserting data:", d)
 	if t.root == nil {
 		t.root = &Node{d, nil, nil}
 	} else {
@@ -58,7 +70,7 @@ func (n *Node) insertRec(d int) {
 		if n.right == nil {
 			n.right = &Node{d, nil, nil}
 		} else {
-			n.left.insertRec(d)
+			n.right.insertRec(d)
 		}
 	}
 }
@@ -71,4 +83,77 @@ func (t *bst) PrintInorder(n *Node) {
 	t.PrintInorder(n.left)
 	fmt.Printf("%d ", n.data)
 	t.PrintInorder(n.right)
+}
+
+func (t *bst) GetNode(d int) *Node {
+	if t.root == nil {
+		return nil
+	} else {
+		return t.root.getNodeRec(t.GetRoot(), d)
+	}
+}
+
+func (nd *Node) getNodeRec(n *Node, d int) *Node {
+	if n.data == d {
+		return n
+	}
+
+	if d < n.data {
+		if n.left == nil {
+			return n
+		} else {
+			return n.getNodeRec(n.left, d)
+		}
+	} else {
+		if n.right == nil {
+			return n
+		} else {
+			return n.getNodeRec(n.right, d)
+		}
+	}
+}
+
+func (t *bst) Depth(n *Node) int {
+	if t == nil || n == nil {
+		return -1
+	}
+
+	return t.root.depthRec(t.GetRoot(), n, 0)
+}
+
+func (nd *Node) depthRec(current, target *Node, currDepth int) int {
+	if current == nil {
+		return -1
+	}
+
+	if current == target {
+		return currDepth
+	}
+
+	if target.data < current.data {
+		return nd.depthRec(current.left, target, currDepth+1)
+	} else {
+		return nd.depthRec(current.right, target, currDepth+1)
+	}
+}
+
+func (t *bst) CountLeaves() int {
+	if t.root == nil {
+		return 0
+	}
+
+	return t.GetRoot().countLeavesRec(t.GetRoot())
+}
+
+func (nd *Node) countLeavesRec(n *Node) int {
+	if n == nil {
+		return 0
+	}
+
+	// é folha
+	if n.left == nil && n.right == nil {
+		return 1
+	}
+
+	return nd.countLeavesRec(n.left) + nd.countLeavesRec(n.right)
 }
