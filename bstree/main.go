@@ -34,7 +34,7 @@ type Node struct {
 	right *Node
 }
 
-type BSTree interface {
+type IBSTree interface {
 	Insert(d int) *bst
 	GetRoot() *Node
 	GetMin(n *Node) *Node
@@ -45,9 +45,10 @@ type BSTree interface {
 	CountLeaves() int
 	Height() int
 	Delete(d int) *Node
+	Contains(d int) bool
 }
 
-func NewBSTree() BSTree {
+func NewBSTree() IBSTree {
 	return &bst{}
 }
 
@@ -304,4 +305,28 @@ func (t *bst) Delete(d int) *Node {
 	}
 
 	return node
+}
+
+func (t *bst) Contains(d int) bool {
+	return t.Search(d) != nil
+}
+
+func (t *bst) Search(d int) *Node {
+	if t.root == nil {
+		return nil
+	}
+	return t.root.searchRec(d)
+}
+
+func (n *Node) searchRec(d int) *Node {
+	if n == nil {
+		return nil
+	}
+	if n.data == d {
+		return n
+	}
+	if d < n.data {
+		return n.left.searchRec(d)
+	}
+	return n.right.searchRec(d)
 }
