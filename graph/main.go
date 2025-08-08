@@ -5,8 +5,8 @@ import "fmt"
 func main() {
 	graph := NewGraph()
 	graph.AddVertex(1).AddVertex(20).AddVertex(14)
-	graph.PrintGraph()
 	graph.AddEdge(1, 14, 5)
+	graph.AddEdge(1, 20, 10)
 	graph.PrintGraph()
 }
 
@@ -63,44 +63,28 @@ func (g *Graph) AddEdge(from, to, weight int) *Edge {
 		return nil
 	}
 
-	edge := Edge{
-		weight: weight,
-		dest:   g.GetVertex(to),
-	}
+	fromVertex := g.GetVertex(from)
 
-	count := 0
-	// 2 - verificar se a aresta ja existe
-	for _, vertex := range g.Vertices {
-		count++
-		// se ja existir, atualiza o peso
-		if ed, exists := vertex.edges[to]; exists {
-			fmt.Println("existe, adicionando")
-			*ed = edge
-
-			break
+	var edge *Edge
+	// 2 - verificar se a aresta ja existe (apenas nesse vértice) - precisamos fazer apenas no vértice FROM (de destino)
+	// se queremos adicionar na aresta 1 -> 10, precisamos olhar apenas nas arestas do vértice 1
+	if oldEdge, exists := fromVertex.edges[to]; exists {
+		edge = &Edge{
+			weight: weight,
+			dest:   oldEdge.dest,
 		}
 
-		// se nao existe cria
-		if count == len(g.Vertices)-1 && vertex.edges[to] == nil {
-			fmt.Println("num existe, criando")
-			vertex.edges = map[int]*Edge{
-				to: &edge,
-			}
+	} else {
+		edge = &Edge{
+			weight: weight,
+			dest:   g.GetVertex(to),
 		}
 	}
 
-	// 3 - Armazena o valor no map de arestas do vertice
-	if fr, exists := g.Vertices[from]; exists {
-		fmt.Println("hello world")
-		*fr = Vertex{
-			val: from,
-			edges: map[int]*Edge{
-				from: &edge,
-			},
-		}
-	}
+	// 3 - Armazena o valor no map de arestas do vertice FROM
+	fromVertex.edges[to] = edge
 
-	return &edge
+	return edge
 }
 
 func (g *Graph) GetVertex(d int) *Vertex {
@@ -117,10 +101,16 @@ func (g *Graph) PrintGraph() {
 	}
 
 	for k, v := range g.Vertices {
-		if edge, exists := v.edges[k]; exists {
-			fmt.Printf("key: %d Vertex Val: %d, Vertex Edge Dest: %d Vertex Edge Weight: %+v\n", k, v.val, edge.dest.val, edge.weight)
-		} else {
-			fmt.Printf("key: %d Vertex Val: %d, Edge address: %v\n", k, v.val, edge)
+		fmt.Printf("Vertex - Chave: %d Valor: %v", k, *v)
+
+		for _, val := range v.edges {
+			if val != nil {
+				fmt.Printf(" -> conecta ao vértice %v com peso %d", val.dest, val.weight)
+			} else {
+				fmt.Printf(" sem conexões")
+			}
 		}
+
+		fmt.Printf("\n")
 	}
 }
