@@ -8,12 +8,16 @@ func main() {
 	graph.AddEdge(1, 14, 5)
 	graph.AddEdge(1, 20, 10)
 	graph.PrintGraph()
+
+	neighbors := graph.GetNeighbors(1)
+	fmt.Println("neighbors", neighbors)
 }
 
 type IGraph interface {
 	AddVertex(d int) *Graph
 	AddEdge(from, to, weight int) *Edge
 	GetVertex(d int) *Vertex
+	GetNeighbors(vertex int) []int
 	PrintGraph()
 }
 
@@ -93,6 +97,22 @@ func (g *Graph) GetVertex(d int) *Vertex {
 	}
 
 	return nil
+}
+
+func (g *Graph) GetNeighbors(vertex int) []int {
+	// 1 - verificar se o vertex existe
+	targetVertex := g.GetVertex(vertex)
+	if targetVertex == nil {
+		return []int{}
+	}
+
+	// 2 - verificar o map de arestas e ver se tem algo
+	var neighbors []int
+	for k := range targetVertex.edges {
+		neighbors = append(neighbors, int((*g.GetVertex(k)).val))
+	}
+
+	return neighbors
 }
 
 func (g *Graph) PrintGraph() {
