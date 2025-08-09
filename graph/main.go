@@ -1,16 +1,34 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	graph := NewGraph()
 	graph.AddVertex(1).AddVertex(20).AddVertex(14)
 	graph.AddEdge(1, 14, 5)
 	graph.AddEdge(1, 20, 10)
+	graph.AddEdge(20, 14, 10)
 	graph.PrintGraph()
 
 	neighbors := graph.GetNeighbors(1)
 	fmt.Println("neighbors", neighbors)
+
+	// println(graph.HasAnyEdge(1))
+	// println(graph.HasAnyEdge(14))
+	// println(graph.HasAnyEdge(20))
+	// println(graph.HasAnyEdge(30))
+
+	// println(graph.HasEdge(1, 14))
+	// println(graph.HasEdge(14, 1))
+	// println(graph.HasEdge(14, 20))
+	println(graph.HasEdge(20, 14))
+	// println(graph.HasEdge(30, 1))
+
+	println("---------")
+	println(graph.RemoveEdge(20, 14))
+	println(graph.HasEdge(20, 14))
 }
 
 type IGraph interface {
@@ -18,6 +36,10 @@ type IGraph interface {
 	AddEdge(from, to, weight int) *Edge
 	GetVertex(d int) *Vertex
 	GetNeighbors(vertex int) []int
+	HasAnyEdge(from int) bool
+	HasEdge(from, to int) bool
+	HasPath(from, to int) bool
+	RemoveEdge(from, to int) bool
 	PrintGraph()
 }
 
@@ -77,7 +99,6 @@ func (g *Graph) AddEdge(from, to, weight int) *Edge {
 			weight: weight,
 			dest:   oldEdge.dest,
 		}
-
 	} else {
 		edge = &Edge{
 			weight: weight,
@@ -113,6 +134,52 @@ func (g *Graph) GetNeighbors(vertex int) []int {
 	}
 
 	return neighbors
+}
+
+func (g *Graph) HasAnyEdge(vertex int) bool {
+	targetVertex := g.GetVertex(vertex)
+	if targetVertex == nil {
+		return false
+	}
+
+	for range targetVertex.edges {
+		return true
+	}
+
+	return false
+}
+
+func (g *Graph) HasEdge(from, to int) bool {
+	fromVertex := g.GetVertex(from)
+	toVertex := g.GetVertex(to)
+	if fromVertex == nil || toVertex == nil {
+		return false
+	}
+
+	if _, exists := fromVertex.edges[to]; exists {
+		return true
+	}
+
+	return false
+}
+
+func (g *Graph) HasPath(from, to int) bool {
+	return false
+}
+
+func (g *Graph) RemoveEdge(from, to int) bool {
+	fromVertex := g.GetVertex(from)
+	toVertex := g.GetVertex(to)
+	if fromVertex == nil || toVertex == nil {
+		return false
+	}
+
+	if _, exists := fromVertex.edges[to]; exists {
+		delete(fromVertex.edges, to)
+		return true
+	}
+
+	return false
 }
 
 func (g *Graph) PrintGraph() {
