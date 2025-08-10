@@ -6,29 +6,15 @@ import (
 
 func main() {
 	graph := NewGraph()
-	graph.AddVertex(1).AddVertex(20).AddVertex(14)
-	graph.AddEdge(1, 14, 5)
-	graph.AddEdge(1, 20, 10)
-	graph.AddEdge(20, 14, 10)
-	graph.PrintGraph()
-
-	neighbors := graph.GetNeighbors(1)
+	graph.AddVertex(3).AddVertex(5).AddVertex(1)
+	graph.AddEdge(5, 1, 10)
+	neighbors := graph.GetNeighbors(3)
 	fmt.Println("neighbors", neighbors)
-
-	// println(graph.HasAnyEdge(1))
-	// println(graph.HasAnyEdge(14))
-	// println(graph.HasAnyEdge(20))
-	// println(graph.HasAnyEdge(30))
-
-	// println(graph.HasEdge(1, 14))
-	// println(graph.HasEdge(14, 1))
-	// println(graph.HasEdge(14, 20))
-	println(graph.HasEdge(20, 14))
-	// println(graph.HasEdge(30, 1))
-
-	println("---------")
-	println(graph.RemoveEdge(20, 14))
-	println(graph.HasEdge(20, 14))
+	fmt.Println("has edge?", graph.HasEdge(5, 1))
+	graph.PrintGraph()
+	graph.RemoveEdge(5, 1)
+	fmt.Println("has edge?", graph.HasEdge(5, 1))
+	graph.PrintGraph()
 }
 
 type IGraph interface {
@@ -54,7 +40,8 @@ type Edge struct {
 }
 
 type Vertex struct {
-	val   int
+	val int
+	// vertex key -> Edge
 	edges map[int]*Edge
 }
 
@@ -62,6 +49,14 @@ func NewGraph() IGraph {
 	return &Graph{
 		Vertices: make(map[int]*Vertex),
 	}
+}
+
+func (g *Graph) GetVertex(d int) *Vertex {
+	if vertex, exists := g.Vertices[d]; exists {
+		return vertex
+	}
+
+	return nil
 }
 
 func (g *Graph) AddVertex(d int) *Graph {
@@ -84,16 +79,15 @@ func (g *Graph) AddVertex(d int) *Graph {
 
 func (g *Graph) AddEdge(from, to, weight int) *Edge {
 	// 1 - verificar se ambos os vertices existem
-	if g.Vertices[from] == nil || g.Vertices[to] == nil {
+	if g.GetVertex(from) == nil || g.GetVertex(to) == nil {
 		fmt.Printf("From or to doesnt exist")
 		return nil
 	}
 
-	fromVertex := g.GetVertex(from)
-
-	var edge *Edge
 	// 2 - verificar se a aresta ja existe (apenas nesse vértice) - precisamos fazer apenas no vértice FROM (de destino)
 	// se queremos adicionar na aresta 1 -> 10, precisamos olhar apenas nas arestas do vértice 1
+	fromVertex := g.GetVertex(from)
+	var edge *Edge
 	if oldEdge, exists := fromVertex.edges[to]; exists {
 		edge = &Edge{
 			weight: weight,
@@ -112,14 +106,6 @@ func (g *Graph) AddEdge(from, to, weight int) *Edge {
 	return edge
 }
 
-func (g *Graph) GetVertex(d int) *Vertex {
-	if vertex, exists := g.Vertices[d]; exists {
-		return vertex
-	}
-
-	return nil
-}
-
 func (g *Graph) GetNeighbors(vertex int) []int {
 	// 1 - verificar se o vertex existe
 	targetVertex := g.GetVertex(vertex)
@@ -130,7 +116,7 @@ func (g *Graph) GetNeighbors(vertex int) []int {
 	// 2 - verificar o map de arestas e ver se tem algo
 	var neighbors []int
 	for k := range targetVertex.edges {
-		neighbors = append(neighbors, int((*g.GetVertex(k)).val))
+		neighbors = append(neighbors, k)
 	}
 
 	return neighbors
@@ -164,6 +150,7 @@ func (g *Graph) HasEdge(from, to int) bool {
 }
 
 func (g *Graph) HasPath(from, to int) bool {
+	// todo
 	return false
 }
 
@@ -188,13 +175,13 @@ func (g *Graph) PrintGraph() {
 	}
 
 	for k, v := range g.Vertices {
-		fmt.Printf("Vertex - Chave: %d Valor: %v", k, *v)
+		fmt.Printf("Vertex - Key: %d Value: %v", k, *v)
 
 		for _, val := range v.edges {
 			if val != nil {
-				fmt.Printf(" -> conecta ao vértice %v com peso %d", val.dest, val.weight)
+				fmt.Printf(" -> connected to vertex %v with weight %d", val.dest, val.weight)
 			} else {
-				fmt.Printf(" sem conexões")
+				fmt.Printf(" without connections")
 			}
 		}
 
