@@ -11,6 +11,11 @@ func main() {
 	graph.AddVertex(10).AddVertex(30).AddEdge(10, 30, 5)
 	graph.AddVertex(20).AddVertex(40).AddEdge(20, 40, 15)
 	graph.AddEdge(20, 10, 10)
+	graph.AddEdge(30, 40, 20)
+	graph.AddVertex(1).AddEdge(30, 1, 25)
+	graph.AddVertex(2).AddEdge(30, 2, 30)
+	graph.AddVertex(3).AddEdge(30, 3, 35)
+	graph.AddVertex(4).AddEdge(30, 4, 40)
 
 	// fmt.Println(graph.GetNeighbors(20))
 	// graph.TraverseGraphSimple(20)
@@ -30,7 +35,8 @@ func main() {
 	// graph.GreedyColoring(2)
 }
 
-type coloredMap map[*Vertex]int
+// valor do vertice -> cor
+type coloredMap map[int]int
 
 type IGraph interface {
 	AddVertex(val int) *Graph
@@ -145,9 +151,6 @@ func (g *Graph) TraverseGraphSimple(start int) {
 		}
 	}
 
-	// for vis := range visited {
-	// 	fmt.Printf("visited: %d\n", vis)
-	// }
 }
 
 func (g *Graph) TraverseGraphDFS() {
@@ -178,19 +181,13 @@ func (g *Graph) DFS(vertex *Vertex, visited *map[int]bool) {
 }
 
 // Backtrack O(k^V)
-// Estrateǵia: tenta todas possibilitades, se nao funcionar faz o backtrack
+// Estratégia: tenta todas possibilitades, se nao funcionar faz o backtrack
 func (g *Graph) BacktrackColoring(n int) bool {
+	fmt.Printf("--------- backtrack coloring\n")
+
 	coloredMap, verticesList := g.makeColorMapAndVerticesList()
-
 	if g.doColor(verticesList, 0, n, coloredMap) {
-		fmt.Printf("solução encontrada!\n")
-		fmt.Printf("cores: ")
-
-		for v, c := range *coloredMap {
-			fmt.Printf("[vertex: %+v - cor: %d], ", v.val, c)
-		}
-
-		fmt.Printf("\n")
+		g.printColors(coloredMap)
 		return true
 	} else {
 		fmt.Printf("nenhuma solução com %d cores\n", n)
@@ -210,80 +207,61 @@ func (g *Graph) BacktrackColoring(n int) bool {
 // 3: Assina uma cor e continua. Colore o vertice na cor escolhida e move para o próximo, e nunca muda decieso anteriores.
 // 4: Termina com todos vertices coloridos ou nao
 func (g *Graph) GreedyColoring(n int) bool {
-	colors, vertexList := g.makeColorMapAndVerticesList()
-	sort.Ints(vertexList)
+	fmt.Printf("--------- greedy coloring\n")
+	coloredMap, verticesList := g.makeColorMapAndVerticesList()
+	sort.Ints(verticesList)
 
-	for _, v := range vertexList {
-		availableColor := g.availableColor(n, v, colors)
+	for _, v := range verticesList {
+		availableColor := g.availableColor(n, v, coloredMap)
 		if availableColor == -1 {
 			log.Printf("coloração nao disponivel para o grafo!\n")
 			return false
 		}
 
-		(*colors)[g.GetVertex(v)] = availableColor
+		(*coloredMap)[v] = availableColor
 	}
 
-	fmt.Printf("coloração dos grafos ficou: ")
-	for _, c := range *colors {
-		fmt.Printf("%v ", c)
-	}
-	fmt.Printf("\n")
+	g.printColors(coloredMap)
 	return true
 }
 
 func (g *Graph) GreedyColoringByDegree(n int) bool {
 	fmt.Printf("--------- coloring by degree\n")
-	colors, vertexList := g.makeColorMapAndVerticesList()
-	sort.Ints(vertexList)
-	ordered := g.sortByDegree(vertexList)
+	coloredMap, verticesList := g.makeColorMapAndVerticesList()
+	ordered := g.sortByDegree(verticesList)
 
 	for _, v := range ordered {
-		availableColor := g.availableColor(n, v, colors)
+		availableColor := g.availableColor(n, v, coloredMap)
 		if availableColor == -1 {
 			log.Printf("coloração nao disponivel para o grafo!\n")
 			return false
 		}
 
-		(*colors)[g.GetVertex(v)] = availableColor
+		(*coloredMap)[v] = availableColor
 	}
 
-	fmt.Printf("coloração dos grafos ficou: ")
-	for _, c := range *colors {
-		fmt.Printf("%v ", c)
-	}
+	g.printColors(coloredMap)
 
-	fmt.Printf("\n")
 	return true
 }
 
-func (g *Graph) sortByDegree(vertexList []int) []int {
-	vertices := make(map[int]int, g.Len)
-
-	for _, v := range vertexList {
-		degree := len(g.GetNeighbors(v))
-		vertices[v] = degree
+func (g *Graph) printColors(colors *coloredMap) {
+	fmt.Printf("coloração dos grafos ficou: ")
+	for v, c := range *colors {
+		fmt.Printf("[vertex: %d - cor: %d], ", v, c)
 	}
 
-	type kv struct {
-		Key   int
-		Value int
-	}
+	fmt.Printf("\n")
+}
 
-	var res []kv
-	for k, v := range vertices {
-		res = append(res, kv{k, v})
-	}
-
-	sort.Slice(res, func(i, j int) bool {
-		return res[i].Value > res[j].Value
+func (g *Graph) sortByDegree(verticesList []int) []int {
+	sort.Slice(verticesList, func(i, j int) bool {
+		degreeI := len(g.GetNeighbors(verticesList[i]))
+		degreeJ := len(g.GetNeighbors(verticesList[j]))
+		return degreeI > degreeJ // ordem descendente
 	})
 
-	var sortedVertices []int
-	for _, kv := range res {
-		sortedVertices = append(sortedVertices, kv.Key)
-	}
-
-	return sortedVertices
+	return verticesList
 }
 
 func (g *Graph) makeColorMapAndVerticesList() (*coloredMap, []int) {
@@ -291,7 +269,7 @@ func (g *Graph) makeColorMapAndVerticesList() (*coloredMap, []int) {
 	var vertices []int
 
 	for _, v := range g.Vertices {
-		coloredMap[v] = -1
+		coloredMap[v.val] = -1
 		vertices = append(vertices, v.val)
 	}
 
@@ -309,7 +287,7 @@ func (g *Graph) doColor(vertices []int, vertexIdx, maxColors int, coloredMap *co
 	for color := range maxColors - 1 {
 		if g.canColor(currentVertex, color, coloredMap) {
 			fmt.Printf("colorindo... grafo: %d com cor: %d\n", currentVertex, color)
-			(*coloredMap)[g.GetVertex(currentVertex)] = color
+			(*coloredMap)[currentVertex] = color
 
 			// recursao para o proximo vertice
 			if g.doColor(vertices, vertexIdx+1, maxColors, coloredMap) {
@@ -317,7 +295,7 @@ func (g *Graph) doColor(vertices []int, vertexIdx, maxColors int, coloredMap *co
 			}
 
 			// backtrack: desfaz a escolha
-			(*coloredMap)[g.GetVertex(currentVertex)] = -1
+			(*coloredMap)[currentVertex] = -1
 		}
 	}
 
@@ -327,7 +305,7 @@ func (g *Graph) doColor(vertices []int, vertexIdx, maxColors int, coloredMap *co
 func (g *Graph) canColor(currentVertex, color int, coloredMap *coloredMap) bool {
 	neighbors := g.GetNeighbors(currentVertex)
 	for _, neighbor := range neighbors {
-		if (*coloredMap)[g.GetVertex(neighbor)] == color {
+		if (*coloredMap)[neighbor] == color {
 			fmt.Printf("nao pode colorir o vertice %d, neighbor %d, cor: %d\n", currentVertex, neighbor, color)
 			return false
 		}
@@ -341,7 +319,7 @@ func (g *Graph) availableColor(numColors, vertexVal int, coloredMap *coloredMap)
 	forbiddenColors := make(map[int]bool)
 
 	for _, neighbor := range neighbors {
-		color, exists := (*coloredMap)[g.GetVertex(neighbor)]
+		color, exists := (*coloredMap)[neighbor]
 		if exists && color != -1 {
 			forbiddenColors[color] = true
 		}
