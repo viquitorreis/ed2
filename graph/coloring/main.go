@@ -2,27 +2,44 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"math/rand"
 	"sort"
 )
 
+//	OBJETIVO DO TRABALHO: Comparar os algoritmos:
+// 		tempo de execução, e resultados: em que proporção/contexto/situação os algoritmos greedy falham.
+// 		Será necessário fazer isso de forma automática: criar um gerador de grafos,
+// 		fazer as analise e produzir os resultados (tabelas, graficos,...)
+
+// Os grafos possuem "dois" tamanhos: o número de vértices e o número de arestas.
+// É necessário que os testes considerem estas características. Por exemplo, para um grafo de 10 vértices,
+// fazer testes com pouca arestas, número médio de arestas e muitas arestas. Lembrando que o resultado tem um grau de aleatoriedade então voce deverá considerar valores medios.
+
+// A biblioteca de grafos vista em sala de aula deve ser minimamente suficiente....voces podem usar bibliotecas de terceiros, obviamente sem usar funções/recursos relacionados a coloração.
+// O produto a ser entregue é um artigo seguindo o modelo (.doc ou latex):
+
+// https://www.sbc.org.br/wp-content/uploads/2024/07/modelosparapublicaodeartigos.zip
+
+// Apenas os itens relacionados a Desenvolvimento, Resultados e Conclusoes  devem ser entregues.  Na avaliação a Bibliografia é opcional. (Normalmente um artigo ainda possui introdução, revisao bibliográfica, trabalhos correlatos...). O codigo completo devera estar em um apendice (normalmente isso nao é possivel em artigos). No texto principal pseudo-codigo e/ou pequenos trechos de implementação na linguagem escolhida.
+
 func main() {
-	graph := NewGraph()
-	graph.AddVertex(10).AddVertex(30).AddEdge(10, 30, 5)
-	graph.AddVertex(20).AddVertex(40).AddEdge(20, 40, 15)
-	graph.AddEdge(20, 10, 10)
-	graph.AddEdge(30, 40, 20)
-	graph.AddVertex(1).AddEdge(30, 1, 25)
-	graph.AddVertex(2).AddEdge(30, 2, 30)
-	graph.AddVertex(3).AddEdge(30, 3, 35)
-	graph.AddVertex(4).AddEdge(30, 4, 40)
+	// graph := NewGraph()
+	// graph.AddVertex(10).AddVertex(30).AddEdge(10, 30, 5)
+	// graph.AddVertex(20).AddVertex(40).AddEdge(20, 40, 15)
+	// graph.AddEdge(20, 10, 10)
+	// graph.AddEdge(30, 40, 20)
+	// graph.AddVertex(1).AddEdge(30, 1, 25)
+	// graph.AddVertex(2).AddEdge(30, 2, 30)
+	// graph.AddVertex(3).AddEdge(30, 3, 35)
+	// graph.AddVertex(4).AddEdge(30, 4, 40)
 
 	// fmt.Println(graph.GetNeighbors(20))
 	// graph.TraverseGraphSimple(20)
 	// graph.PrintGraph()
+
 	// graph.BacktrackColoring(3)
-	graph.GreedyColoring(3)
-	graph.GreedyColoringByDegree(3)
+	// graph.GreedyColoring(3)
+	// graph.GreedyColoringByDegree(3)
 
 	// Criando triangulo (3 vertices todos conectados)
 	// graph.AddVertex(1).AddVertex(2).AddVertex(3)
@@ -33,16 +50,41 @@ func main() {
 	// tentar colorir com apenas 2 cores
 	// fmt.Println(graph.BacktrackColoring(2))
 	// graph.GreedyColoring(2)
-}
+	// fmt.Println(GenerateGraph(20, mid))
 
-// valor do vertice -> cor
-type coloredMap map[int]int
+	testSuite := &TestSuite{}
+
+	// parametros de teste
+	vertices := []int{5, 10, 20, 50, 100}
+	densities := []graphDensity{sparse, mid, dense}
+	algorithms := []algorithm{backtrack, greedy, greedyByDegree}
+	repetitions := 5 // começar com 5, aumentar depois
+
+	for _, v := range vertices {
+		for _, d := range densities {
+			for _, alg := range algorithms {
+				results := runMultipleTests(v, d, alg, repetitions)
+
+				for _, result := range results {
+					testSuite.AddResult(result)
+				}
+
+				printAndWriteResults(results)
+			}
+		}
+	}
+
+	fmt.Printf("Total de testes completos: %d\n", len(testSuite.Results))
+}
 
 type IGraph interface {
 	AddVertex(val int) *Graph
-	GetVertex(val int) *Vertex
 	AddEdge(from, to, weight int) bool
+	HasEdge(from, to int) bool
+	GetVertex(val int) *Vertex
+	GetDensity() float32
 	GetNeighbors(n int) []int
+	GetLen() int
 	TraverseGraphSimple(start int)
 	TraverseGraphDFS()
 	BacktrackColoring(n int) bool
@@ -51,9 +93,21 @@ type IGraph interface {
 	PrintGraph()
 }
 
+// valor do vertice -> cor
+type coloredMap map[int]int
+
+type graphDensity uint
+
+const (
+	sparse graphDensity = iota
+	mid
+	dense
+)
+
 type Graph struct {
 	Vertices map[int]*Vertex
 	Len      int
+	EdgesLen int
 }
 
 type Vertex struct {
@@ -69,6 +123,48 @@ type Edge struct {
 func NewGraph() IGraph {
 	return &Graph{
 		Vertices: make(map[int]*Vertex),
+		Len:      0,
+		EdgesLen: 0,
+	}
+}
+
+func GenerateGraph(nVertices int, density float32) IGraph {
+	graph := NewGraph()
+
+	for n := range nVertices {
+		graph.AddVertex(n + 1)
+	}
+
+	// número máximo de arestas de um grafo não direcionado é n(n - 1) / 2
+	maxEdges := nVertices * (nVertices - 1) / 2
+	targetEdges := int(float32(maxEdges) * density)
+
+	edgesAdded := 0
+	for edgesAdded < targetEdges {
+		i := rand.Intn(nVertices) + 1
+		j := rand.Intn(nVertices) + 1
+
+		if i != j && !graph.HasEdge(i, j) {
+			weight := rand.Intn(10) + 1
+			if graph.AddEdge(i, j, weight) {
+				edgesAdded++
+			}
+		}
+	}
+
+	return graph
+}
+
+func genDensity(density graphDensity) float32 {
+	switch density {
+	case sparse:
+		return 0.1
+	case mid:
+		return 0.5
+	case dense:
+		return 1
+	default:
+		return 0.5
 	}
 }
 
@@ -124,6 +220,7 @@ func (g *Graph) AddEdge(from, to, weight int) bool {
 
 	fromVertex.edges[to] = toEdge
 	toVertex.edges[from] = fromEdge
+	g.EdgesLen++
 
 	return true
 }
@@ -142,6 +239,20 @@ func (g *Graph) GetNeighbors(n int) []int {
 	return neighbors
 }
 
+func (g *Graph) GetLen() int {
+	return g.Len
+}
+
+func (g *Graph) GetDensity() float32 {
+	maxEdges := g.Len * (g.Len - 1) / 2
+
+	if maxEdges == 0 {
+		return 0
+	}
+
+	return float32(g.EdgesLen) / float32(maxEdges)
+}
+
 func (g *Graph) TraverseGraphSimple(start int) {
 	visited := make(map[int]bool, g.Len)
 
@@ -151,6 +262,20 @@ func (g *Graph) TraverseGraphSimple(start int) {
 		}
 	}
 
+}
+
+func (g *Graph) HasEdge(from, to int) bool {
+	fromVertex := g.GetVertex(from)
+	toVertex := g.GetVertex(to)
+	if fromVertex == nil || toVertex == nil {
+		return false
+	}
+
+	if _, exists := fromVertex.edges[to]; exists {
+		return true
+	}
+
+	return false
 }
 
 func (g *Graph) TraverseGraphDFS() {
@@ -183,8 +308,6 @@ func (g *Graph) DFS(vertex *Vertex, visited *map[int]bool) {
 // Backtrack O(k^V)
 // Estratégia: tenta todas possibilitades, se nao funcionar faz o backtrack
 func (g *Graph) BacktrackColoring(n int) bool {
-	fmt.Printf("--------- backtrack coloring\n")
-
 	coloredMap, verticesList := g.makeColorMapAndVerticesList()
 	if g.doColor(verticesList, 0, n, coloredMap) {
 		g.printColors(coloredMap)
@@ -207,14 +330,12 @@ func (g *Graph) BacktrackColoring(n int) bool {
 // 3: Assina uma cor e continua. Colore o vertice na cor escolhida e move para o próximo, e nunca muda decieso anteriores.
 // 4: Termina com todos vertices coloridos ou nao
 func (g *Graph) GreedyColoring(n int) bool {
-	fmt.Printf("--------- greedy coloring\n")
 	coloredMap, verticesList := g.makeColorMapAndVerticesList()
 	sort.Ints(verticesList)
 
 	for _, v := range verticesList {
 		availableColor := g.availableColor(n, v, coloredMap)
 		if availableColor == -1 {
-			log.Printf("coloração nao disponivel para o grafo!\n")
 			return false
 		}
 
@@ -226,14 +347,12 @@ func (g *Graph) GreedyColoring(n int) bool {
 }
 
 func (g *Graph) GreedyColoringByDegree(n int) bool {
-	fmt.Printf("--------- coloring by degree\n")
 	coloredMap, verticesList := g.makeColorMapAndVerticesList()
 	ordered := g.sortByDegree(verticesList)
 
 	for _, v := range ordered {
 		availableColor := g.availableColor(n, v, coloredMap)
 		if availableColor == -1 {
-			log.Printf("coloração nao disponivel para o grafo!\n")
 			return false
 		}
 
@@ -246,7 +365,6 @@ func (g *Graph) GreedyColoringByDegree(n int) bool {
 }
 
 func (g *Graph) printColors(colors *coloredMap) {
-	fmt.Printf("coloração dos grafos ficou: ")
 	for v, c := range *colors {
 		fmt.Printf("[vertex: %d - cor: %d], ", v, c)
 	}
@@ -284,9 +402,8 @@ func (g *Graph) doColor(vertices []int, vertexIdx, maxColors int, coloredMap *co
 
 	currentVertex := vertices[vertexIdx]
 	// brute force -> tenta todas as cores nesse vertice especifico
-	for color := range maxColors - 1 {
+	for color := 0; color < maxColors; color++ {
 		if g.canColor(currentVertex, color, coloredMap) {
-			fmt.Printf("colorindo... grafo: %d com cor: %d\n", currentVertex, color)
 			(*coloredMap)[currentVertex] = color
 
 			// recursao para o proximo vertice
@@ -306,7 +423,6 @@ func (g *Graph) canColor(currentVertex, color int, coloredMap *coloredMap) bool 
 	neighbors := g.GetNeighbors(currentVertex)
 	for _, neighbor := range neighbors {
 		if (*coloredMap)[neighbor] == color {
-			fmt.Printf("nao pode colorir o vertice %d, neighbor %d, cor: %d\n", currentVertex, neighbor, color)
 			return false
 		}
 	}

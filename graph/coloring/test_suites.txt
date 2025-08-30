@@ -1,0 +1,543 @@
+Resultados para 5 vertices, densidade 0.1, algoritmo backtrack:
+		Tempo de execução: 12.242µs
+		Tempo médio: 8.672µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.1, algoritmo greedy:
+		Tempo de execução: 10.447µs
+		Tempo médio: 9.158µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.1, algoritmo greedyByDegree:
+		Tempo de execução: 12.963µs
+		Tempo médio: 10.978µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.5, algoritmo backtrack:
+		Tempo de execução: 20.703µs
+		Tempo médio: 28.768µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.5, algoritmo greedy:
+		Tempo de execução: 18.039µs
+		Tempo médio: 19.015µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.5, algoritmo greedyByDegree:
+		Tempo de execução: 33.85µs
+		Tempo médio: 26.493µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.60
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 1, algoritmo backtrack:
+		Tempo de execução: 149.761µs
+		Tempo médio: 136.644µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 5.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 1, algoritmo greedy:
+		Tempo de execução: 26.068µs
+		Tempo médio: 24.137µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 5.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 1, algoritmo greedyByDegree:
+		Tempo de execução: 41.75µs
+		Tempo médio: 36.72µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 5.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.08888889, algoritmo backtrack:
+		Tempo de execução: 34.025µs
+		Tempo médio: 36.579µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.08888889, algoritmo greedy:
+		Tempo de execução: 27.772µs
+		Tempo médio: 28.455µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.08888889, algoritmo greedyByDegree:
+		Tempo de execução: 38.78µs
+		Tempo médio: 40.152µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.4888889, algoritmo backtrack:
+		Tempo de execução: 121.53µs
+		Tempo médio: 345.339µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.20
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.4888889, algoritmo greedy:
+		Tempo de execução: 41.427µs
+		Tempo médio: 44.899µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.20
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.4888889, algoritmo greedyByDegree:
+		Tempo de execução: 100.504µs
+		Tempo médio: 161.84µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.40
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 1, algoritmo backtrack:
+		Tempo de execução: 2.989362359s
+		Tempo médio: 3.106720919s
+		Cores mínimas: 10
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 10.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 1, algoritmo greedy:
+		Tempo de execução: 65.796µs
+		Tempo médio: 66.96µs
+		Cores mínimas: 10
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 10.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 1, algoritmo greedyByDegree:
+		Tempo de execução: 128.805µs
+		Tempo médio: 111.945µs
+		Cores mínimas: 10
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 10.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.1, algoritmo backtrack:
+		Tempo de execução: 935.915µs
+		Tempo médio: 417.818µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.1, algoritmo greedy:
+		Tempo de execução: 58.914µs
+		Tempo médio: 49.533µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.1, algoritmo greedyByDegree:
+		Tempo de execução: 94.902µs
+		Tempo médio: 88.809µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.20
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.5, algoritmo backtrack:
+		Tempo de execução: 327.638241ms
+		Tempo médio: 41.356009644s
+		Cores mínimas: 6
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 6.20
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.5, algoritmo greedy:
+		Tempo de execução: 60.068µs
+		Tempo médio: 62.328µs
+		Cores mínimas: 7
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 6.80
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.5, algoritmo greedyByDegree:
+		Tempo de execução: 254.003µs
+		Tempo médio: 336.962µs
+		Cores mínimas: 6
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 6.40
+		Sucesso: true
+		MaxK testados: 20
+---
+
+
+============ A partir de densidade 1, com 20 cores, o tempo de execução aumenta exponencialmente no backtracking
+Resultados para 5 vertices, densidade 0.1, algoritmo backtrack:
+		Tempo de execução: 16.529µs
+		Tempo médio: 15.255µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.1, algoritmo greedy:
+		Tempo de execução: 10.686µs
+		Tempo médio: 8.437µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.1, algoritmo greedyByDegree:
+		Tempo de execução: 15.362µs
+		Tempo médio: 10.825µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.5, algoritmo backtrack:
+		Tempo de execução: 18.572µs
+		Tempo médio: 21.562µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.5, algoritmo greedy:
+		Tempo de execução: 12.921µs
+		Tempo médio: 13.38µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.40
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 0.5, algoritmo greedyByDegree:
+		Tempo de execução: 25.164µs
+		Tempo médio: 23.266µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 1, algoritmo backtrack:
+		Tempo de execução: 140.655µs
+		Tempo médio: 126.75µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 5.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 1, algoritmo greedy:
+		Tempo de execução: 24.893µs
+		Tempo médio: 23.524µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 5.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 5 vertices, densidade 1, algoritmo greedyByDegree:
+		Tempo de execução: 41.071µs
+		Tempo médio: 36.747µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 5.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.08888889, algoritmo backtrack:
+		Tempo de execução: 34.808µs
+		Tempo médio: 30.6µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.08888889, algoritmo greedy:
+		Tempo de execução: 27.316µs
+		Tempo médio: 27.189µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.20
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.08888889, algoritmo greedyByDegree:
+		Tempo de execução: 40.562µs
+		Tempo médio: 39.752µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.4888889, algoritmo backtrack:
+		Tempo de execução: 148.753µs
+		Tempo médio: 242.312µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.4888889, algoritmo greedy:
+		Tempo de execução: 45.623µs
+		Tempo médio: 45.848µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.60
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 0.4888889, algoritmo greedyByDegree:
+		Tempo de execução: 98.38µs
+		Tempo médio: 104.69µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 1, algoritmo backtrack:
+		Tempo de execução: 1.148931ms
+		Tempo médio: 1.059089ms
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 1, algoritmo greedy:
+		Tempo de execução: 21.95µs
+		Tempo médio: 21.756µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 10 vertices, densidade 1, algoritmo greedyByDegree:
+		Tempo de execução: 68.388µs
+		Tempo médio: 72.441µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.1, algoritmo backtrack:
+		Tempo de execução: 886.239µs
+		Tempo médio: 636.96µs
+		Cores mínimas: 2
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 2.80
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.1, algoritmo greedy:
+		Tempo de execução: 108.04µs
+		Tempo médio: 88.389µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.20
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.1, algoritmo greedyByDegree:
+		Tempo de execução: 172.396µs
+		Tempo médio: 141.418µs
+		Cores mínimas: 3
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 3.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.5, algoritmo backtrack:
+		Tempo de execução: 1.194546723s
+		Tempo médio: 565.458095ms
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.5, algoritmo greedy:
+		Tempo de execução: 85.521µs
+		Tempo médio: 87.039µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 0.5, algoritmo greedyByDegree:
+		Tempo de execução: 613.609µs
+		Tempo médio: 407.586µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 1, algoritmo backtrack:
+		Tempo de execução: 1.934554ms
+		Tempo médio: 1.674378ms
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 1, algoritmo greedy:
+		Tempo de execução: 31.245µs
+		Tempo médio: 31.107µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 20 vertices, densidade 1, algoritmo greedyByDegree:
+		Tempo de execução: 114.62µs
+		Tempo médio: 238.391µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 0.09959184, algoritmo backtrack:
+		Tempo de execução: 16.487747329s
+		Tempo médio: 54.390657883s
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 0.09959184, algoritmo greedy:
+		Tempo de execução: 233.852µs
+		Tempo médio: 193.95µs
+		Cores mínimas: 5
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.80
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 0.09959184, algoritmo greedyByDegree:
+		Tempo de execução: 570.5µs
+		Tempo médio: 549.902µs
+		Cores mínimas: 4
+		Taxa de Sucesso: 100.0% (5/5)
+		Cores médias usadas: 4.00
+		Sucesso: true
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 0.49959183, algoritmo backtrack:
+		Tempo de execução: 393.725752ms
+		Tempo médio: 890.808948ms
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 0.49959183, algoritmo greedy:
+		Tempo de execução: 86.769µs
+		Tempo médio: 64.29µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 0.49959183, algoritmo greedyByDegree:
+		Tempo de execução: 1.29206ms
+		Tempo médio: 2.003538ms
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 1, algoritmo backtrack:
+		Tempo de execução: 4.580092ms
+		Tempo médio: 2.994874ms
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 1, algoritmo greedy:
+		Tempo de execução: 44.458µs
+		Tempo médio: 35.259µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
+Resultados para 50 vertices, densidade 1, algoritmo greedyByDegree:
+		Tempo de execução: 878.177µs
+		Tempo médio: 805.454µs
+		Cores mínimas: -1
+		Taxa de Sucesso: 0.0% (0/5)
+		Cores médias usadas: 0.00
+		Sucesso: false
+		MaxK testados: 20
+---
