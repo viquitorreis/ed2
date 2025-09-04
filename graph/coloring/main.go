@@ -6,22 +6,6 @@ import (
 	"sort"
 )
 
-//	OBJETIVO DO TRABALHO: Comparar os algoritmos:
-// 		tempo de execução, e resultados: em que proporção/contexto/situação os algoritmos greedy falham.
-// 		Será necessário fazer isso de forma automática: criar um gerador de grafos,
-// 		fazer as analise e produzir os resultados (tabelas, graficos,...)
-
-// Os grafos possuem "dois" tamanhos: o número de vértices e o número de arestas.
-// É necessário que os testes considerem estas características. Por exemplo, para um grafo de 10 vértices,
-// fazer testes com pouca arestas, número médio de arestas e muitas arestas. Lembrando que o resultado tem um grau de aleatoriedade então voce deverá considerar valores medios.
-
-// A biblioteca de grafos vista em sala de aula deve ser minimamente suficiente....voces podem usar bibliotecas de terceiros, obviamente sem usar funções/recursos relacionados a coloração.
-// O produto a ser entregue é um artigo seguindo o modelo (.doc ou latex):
-
-// https://www.sbc.org.br/wp-content/uploads/2024/07/modelosparapublicaodeartigos.zip
-
-// Apenas os itens relacionados a Desenvolvimento, Resultados e Conclusoes  devem ser entregues.  Na avaliação a Bibliografia é opcional. (Normalmente um artigo ainda possui introdução, revisao bibliográfica, trabalhos correlatos...). O codigo completo devera estar em um apendice (normalmente isso nao é possivel em artigos). No texto principal pseudo-codigo e/ou pequenos trechos de implementação na linguagem escolhida.
-
 func main() {
 	// graph := NewGraph()
 	// graph.AddVertex(10).AddVertex(30).AddEdge(10, 30, 5)
@@ -58,7 +42,7 @@ func main() {
 	vertices := []int{5, 10, 20, 50, 100}
 	densities := []graphDensity{sparse, mid, dense}
 	algorithms := []algorithm{backtrack, greedy, greedyByDegree}
-	repetitions := 5 // começar com 5, aumentar depois
+	repetitions := 5
 
 	for _, v := range vertices {
 		for _, d := range densities {
