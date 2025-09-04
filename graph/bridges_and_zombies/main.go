@@ -41,6 +41,8 @@ func main() {
 		// 	TraverseOrder{v1: Eu, v2: Professor, doBack: Professor},
 		// ) {
 		log.Println("Sucesso! Conseguiram atravessar.")
+	} else {
+		log.Println("Não foi possível atravessar!")
 	}
 }
 
@@ -68,9 +70,12 @@ type IGraph interface {
 	GetVertex(val int) *Vertex
 	GetVertexByType(personType personType) *Vertex
 	TraverseBridge(traverseOrder ...TraverseOrder) bool
-	CheckAllTraversed() bool
 	InitializeSide()
 	MovePeople(v1, v2 *Vertex)
+	MovePersonBack(v *Vertex)
+	IsOnInitialSide(v *Vertex) bool
+	IsOnFinalSide(v *Vertex) bool
+	IsOnLaternSide(v1, v2 *Vertex) bool
 	PrintGraph()
 }
 
@@ -83,10 +88,18 @@ const (
 	Professor   personType = "professor"
 )
 
+type lanternSide string
+
+const (
+	initialSide lanternSide = "initial"
+	finalSide   lanternSide = "final"
+)
+
 type Graph struct {
 	vertices    map[int]*Vertex
 	initialSide *[]personType
 	finalSide   *[]personType
+	lanternSide lanternSide
 }
 
 type Vertex struct {
@@ -108,6 +121,7 @@ func NewGraph() IGraph {
 		vertices:    make(map[int]*Vertex),
 		initialSide: &initialState,
 		finalSide:   &finalState,
+		lanternSide: initialSide,
 	}
 }
 
@@ -161,6 +175,10 @@ func (g *Graph) InitializeSide() {
 func (g *Graph) TraverseBridge(traverseOrder ...TraverseOrder) bool {
 	log.Println("Atravessando a ponte...")
 
+	if len(traverseOrder) < 3 {
+		return false
+	}
+
 	for _, travOrder := range traverseOrder {
 		fmt.Printf("Atravessando -> %s e %s\n", travOrder.v1, travOrder.v2)
 
@@ -168,6 +186,11 @@ func (g *Graph) TraverseBridge(traverseOrder ...TraverseOrder) bool {
 		v2 := g.GetVertexByType(travOrder.v2)
 		if v1 == nil || v2 == nil {
 			fmt.Printf("Vertice nao existe!")
+			return false
+		}
+
+		if !g.IsOnLaternSide(v1, v2) {
+			fmt.Printf("Pessoas não estão no lado da lanterna!")
 			return false
 		}
 
@@ -196,6 +219,12 @@ func (g *Graph) MovePeople(v1, v2 *Vertex) {
 	*g.finalSide = append(*g.finalSide, v1.personType)
 	*g.finalSide = append(*g.finalSide, v2.personType)
 
+	if g.lanternSide == initialSide {
+		g.lanternSide = finalSide
+	} else {
+		g.lanternSide = initialSide
+	}
+
 	*g.initialSide = newInitialSide
 }
 
@@ -212,12 +241,42 @@ func (g *Graph) MovePersonBack(v *Vertex) {
 		}
 	}
 
+	if g.lanternSide == initialSide {
+		g.lanternSide = finalSide
+	} else {
+		g.lanternSide = initialSide
+	}
+
 	*g.initialSide = append(*g.initialSide, v.personType)
 	*g.finalSide = newFinalSide
 }
 
-func (g *Graph) CheckAllTraversed() bool {
-	return true
+func (g *Graph) IsOnInitialSide(v *Vertex) bool {
+	for _, p := range *g.initialSide {
+		if p == v.personType {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (g *Graph) IsOnFinalSide(v *Vertex) bool {
+	for _, p := range *g.finalSide {
+		if p == v.personType {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (g *Graph) IsOnLaternSide(v1, v2 *Vertex) bool {
+	if g.lanternSide == initialSide {
+		return g.IsOnInitialSide(v1) && g.IsOnInitialSide(v2)
+	} else {
+		return g.IsOnFinalSide(v1) && g.IsOnFinalSide(v2)
+	}
 }
 
 func maxInt(a, b int) int {
