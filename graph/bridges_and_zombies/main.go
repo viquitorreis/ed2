@@ -35,11 +35,6 @@ func main() {
 		TraverseOrder{v1: Professor, v2: Zelador, doBack: Pesquisador},
 		TraverseOrder{v1: Eu, v2: Pesquisador, doBack: ""},
 	) {
-		// if graph.TraverseBridge(
-		// 	TraverseOrder{v1: Eu, v2: Professor, doBack: Professor},
-		// 	TraverseOrder{v1: Eu, v2: Professor, doBack: Professor},
-		// 	TraverseOrder{v1: Eu, v2: Professor, doBack: Professor},
-		// ) {
 		log.Println("Sucesso! Conseguiram atravessar.")
 	} else {
 		log.Println("Não foi possível atravessar!")
@@ -127,7 +122,11 @@ func NewGraph() IGraph {
 
 func GenerateGraph() IGraph {
 	graph := NewGraph()
-	graph.AddVertex(1, Eu).AddVertex(2, Pesquisador).AddVertex(5, Zelador).AddVertex(10, Professor)
+	graph.
+		AddVertex(1, Eu).
+		AddVertex(2, Pesquisador).
+		AddVertex(5, Zelador).
+		AddVertex(10, Professor)
 	graph.InitializeSide()
 	return graph
 }
